@@ -15,6 +15,7 @@ use CL\Tissue\Exception\AdapterException;
 use CL\Tissue\Model\Detection;
 use CL\Tissue\Model\ScanResult;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Process\ProcessBuilder;
 
 abstract class AbstractAdapter implements AdapterInterface
@@ -36,6 +37,7 @@ abstract class AbstractAdapter implements AdapterInterface
 
     /**
      * {@inheritdoc}
+     *
      * @throws \InvalidArgumentException
      */
     public function scan(array $paths, array $options = []): ScanResult
@@ -62,6 +64,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param array $paths
      *
      * @return ScanResult
+     *
      * @throws \InvalidArgumentException
      */
     protected function scanArray(array $paths): ScanResult
@@ -86,7 +89,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     protected function resolveOptions(array $options): array
     {
-        if ($this->resolver === null) {
+        if (null === $this->resolver) {
             $this->resolver = new OptionsResolver();
             $this->configureOptions($this->resolver);
         }
@@ -98,6 +101,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param string $path
      *
      * @return ScanResult
+     *
      * @throws \InvalidArgumentException
      */
     protected function scanSingle(string $path): ?ScanResult
@@ -157,7 +161,30 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * Creates a new process builder that your might use to interact with your virus-scanner's executable.
+     * Creates a new process that you might use to interact with your virus-scanner's executable.
+     *
+     * @param array    $command The command to run and its arguments listed as separate entries
+     * @param int|null $timeout An optional number of seconds for the process' timeout limit
+     *
+     * @return Process A new process
+     *
+     * @codeCoverageIgnore
+     */
+    protected function createProcess(array $command, $timeout = null): Process
+    {
+        $process = new Process($command);
+
+        if (null !== $timeout) {
+            $process->setTimeout($timeout);
+        }
+
+        return $process;
+    }
+
+    /**
+     * Creates a new process builder that you might use to interact with your virus-scanner's executable.
+     *
+     * @deprecated
      *
      * @param array    $arguments An optional array of arguments
      * @param int|null $timeout   An optional number of seconds for the process' timeout limit
@@ -169,7 +196,6 @@ abstract class AbstractAdapter implements AdapterInterface
     protected function createProcessBuilder(array $arguments = [], $timeout = null): ProcessBuilder
     {
         $pb = new ProcessBuilder($arguments);
-
         if (null !== $timeout) {
             $pb->setTimeout($timeout);
         }
