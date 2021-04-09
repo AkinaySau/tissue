@@ -1,35 +1,45 @@
 {
-  "name":         "evozon-php/tissue",
-  "type":         "library",
-  "description":  "Slight variation of the original cleentfaar/tissue",
-  "keywords":     ["anti-virus", "virus", "clamav", "security"],
-  "homepage":     "http://evozon.com",
-  "license":      "proprietary",
-  "authors": [
-    {
-      "name": "Cas Leentfaar",
-      "homepage": "https://github.com/cleentfaar",
-      "email": "info@casleentfaar.com"
+    "name": "sau/tissue",
+    "type": "library",
+    "description": "Slight variation of the original cleentfaar/tissue and evozon-php/tissue",
+    "keywords": [
+        "anti-virus",
+        "virus",
+        "clamav",
+        "security"
+    ],
+    "homepage": "https://github.com/AkinaySau",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Cas Leentfaar",
+            "homepage": "https://github.com/cleentfaar",
+            "email": "info@casleentfaar.com"
+        },
+        {
+            "name": "Balazs Csaba",
+            "homepage": "http://evozon.com",
+            "email": "csaba.balazs@evozon.com"
+        },
+        {
+            "name": "Vladimir Mogilev",
+            "homepage": "https://github.com/AkinaySau",
+            "email": "akinaysau@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1",
+        "symfony/options-resolver": "^3.0 || ^4.0",
+        "symfony/process": "^2.5 || ^3.0 || ^4.0"
     },
-    {
-      "name": "Balazs Csaba",
-      "homepage": "http://evozon.com",
-      "email": "csaba.balazs@evozon.com"
+    "require-dev": {
+        "phpunit/phpunit": "^6.0"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "CL\\Tissue\\": ""
+        }
     }
-  ],
-  "require":      {
-    "php": ">=7.1",
-    "symfony/options-resolver": "^3.0 || ^4.0",
-    "symfony/process": "^2.5 || ^3.0 || ^4.0"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^6.0"
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "autoload":     {
-    "psr-4": {
-      "CL\\Tissue\\": ""
-    }
-  }
 }
